@@ -1,26 +1,26 @@
-import { ApiConfig } from "@common/types/api"
-import { Product } from "@common/types/product"
-import { ProductConnection } from "@framework/schema"
-import getAllProductsPathsQuery from "@framework/utils/queries/get-all-products-paths"
+import { ApiConfig } from "@common/types/api";
+import { Product } from "@common/types/product";
+import { ProductConnection } from "@framework/schema";
+import getAllProductsPathsQuery from "@framework/utils/queries/get-all-products-paths";
 
 
 type ReturnType = {
 	products: Pick<Product, "slug">[]
 }
 
-const getAllProductsPaths =  {
-	//
-	// const { data } = await config.fetch<{products: ProductConnection}>({
-	// 	query: getAllProductsPathsQuery})
+const getAllProductsPaths = async (config: ApiConfig): Promise<ReturnType> => {
+	const { data } = await config.fetch<{products: ProductConnection}>({
+		query: getAllProductsPathsQuery,
+		url: config.apiUrl
+	})
 
-	// const products = data.products.edges.map(({node: {handle}}) => {
-	// 	return {
-	// 		slug: handle
-	// 	}
-	// })
+	const products = data.products.edges.map(({node: {handle}}) => {
+		return {
+			slug: handle
+		}
+	})
 
-	// return { products }
-	// return false
+	return { products }
 }
 
-export default getAllProductsPaths
+export default getAllProductsPaths;
